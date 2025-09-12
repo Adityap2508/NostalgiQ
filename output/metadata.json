@@ -1,0 +1,42 @@
+[
+  {
+    "filename": "test_realistic_face.jpg",
+    "frame_idx": 0,
+    "faces": [
+      {
+        "bbox": [
+          179,
+          183,
+          415,
+          419
+        ],
+        "confidence": 0.8,
+        "age_estimate": 40,
+        "cluster_id": -1
+      }
+    ],
+    "scene_text": "bright indoor scene",
+    "objects_detected": [],
+    "ocr_text": []
+  },
+  {
+    "filename": "test_realistic_face.jpg",
+    "frame_idx": 0,
+    "faces": [
+      {
+        "bbox": [
+          179,
+          183,
+          415,
+          419
+        ],
+        "confidence": 0.8,
+        "age_estimate": 49,
+        "cluster_id": -1
+      }
+    ],
+    "scene_text": "bright indoor scene",
+    "objects_detected": [],
+    "ocr_text": []
+  }
+]
