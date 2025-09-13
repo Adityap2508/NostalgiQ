@@ -1,0 +1,5 @@
+{
+  "name": "Lip Sync Video Generator",
+  "description": "Upload an image and provide a script, and this application will generate a video of the image speaking the text with synchronized lip movements using Google's VEO model.",
+  "requestFramePermissions": []
+}
