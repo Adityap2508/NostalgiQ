@@ -1,0 +1,21 @@
+import insightface
+import cv2
+import os
+from pathlib import Path
+
+input_dir = Path("input_media")
+output_dir = Path("aligned_faces")
+output_dir.mkdir(exist_ok=True)
+
+# Load InsightFace detector
+detector = insightface.app.FaceAnalysis()
+detector.prepare(ctx_id=0, det_size=(640,640))  # GPU 0
+
+for img_file in input_dir.glob("*.*"):
+    img = cv2.imread(str(img_file))
+    faces = detector.get(img)
+    for i, face in enumerate(faces):
+        # crop aligned face
+        x1, y1, x2, y2 = face.bbox.astype(int)
+        cropped = img[y1:y2, x1:x2]
+        cv2.imwrite(str(output_dir / f"{img_file.stem}_{i}.png"), cropped)
