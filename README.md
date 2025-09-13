@@ -1,8 +1,6 @@
+**NostalgiQ**
 
-# CM: Comprehensive Media AI Toolkit
-
-This repository provides a suite of Python tools for face analysis, talking video generation, personality prediction, and text/audio/image conversion. It integrates state-of-the-art models and APIs (SadTalker, HeyGen, D-ID, DeepFace, Gemini, Whisper) for research and creative projects.
-
+Turn your digital memories into living conversations. Upload photos, texts, and social media from any person or time period to recreate authentic AI versions - talk to your teenage self, meet your parents as young adults, or reconnect with old friends exactly as they were
 ---
 
 ## 📦 Modules & Features
