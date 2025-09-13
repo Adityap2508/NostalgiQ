@@ -1,0 +1,12 @@
+{
+  "examples": [
+    {
+      "image": "person1.jpg",
+      "text": "Hello! I'm excited to meet you today."
+    },
+    {
+      "image": "person2.jpg",
+      "text": "This is a demonstration of the talking video generator."
+    }
+  ]
+}
