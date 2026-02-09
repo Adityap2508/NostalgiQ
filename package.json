@@ -1,21 +1,14 @@
 {
-  "name": "lip-sync-video-generator",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "coal-local-server",
+  "version": "1.0.0",
+  "description": "Local static server for HTML file",
+  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "http-server ./public -p 8080",
+    "dev": "http-server ./public -p 8080 --watch"
   },
-  "dependencies": {
-    "react-dom": "^19.1.1",
-    "react": "^19.1.1",
-    "@google/genai": "^1.19.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "http-server": "^14.1.1"
   }
 }

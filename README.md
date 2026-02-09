@@ -1,6 +1,8 @@
-**NostalgiQ**
 
-Turn your digital memories into living conversations. Upload photos, texts, and social media from any person or time period to recreate authentic AI versions - talk to your teenage self, meet your parents as young adults, or reconnect with old friends exactly as they were
+# CM: Comprehensive Media AI Toolkit
+
+This repository provides a suite of Python tools for face analysis, talking video generation, personality prediction, and text/audio/image conversion. It integrates state-of-the-art models and APIs (SadTalker, HeyGen, D-ID, DeepFace, Gemini, Whisper) for research and creative projects.
+
 ---
 
 ## 📦 Modules & Features
@@ -23,6 +25,12 @@ Turn your digital memories into living conversations. Upload photos, texts, and 
 - Extracts text and dates from .txt or image files (Gemini Vision)
 - Converts speech to text (Whisper)
 
+### 5. Media Intelligence API (`app.py`)
+- **Face** (InsightFace + DeepFace): detection, embeddings, attributes (emotion/age/gender)
+- **Voice** (Whisper + Resemblyzer): speech-to-text, speaker embeddings
+- **TTS** (Coqui TTS): text-to-speech with optional voice cloning
+- REST API: `POST /face/analyze`, `POST /voice/analyze`, `POST /tts`
+
 ---
 
 ## 🚀 Installation
@@ -35,6 +43,14 @@ pip install -r requirements_talking_video.txt
 pip install -r requirements_personality.txt
 pip install insightface mediapipe deepface ultralytics easyocr clip-by-openai opencv-python scikit-learn torch torchvision pillow numpy
 ```
+
+**Media Intelligence API** (face, voice, TTS):
+```bash
+pip install -r requirements_media_intelligence.txt
+```
+- **ffmpeg** must be installed system-wide for audio extraction from video.
+- **CPU vs GPU**: Default is CPU. For GPU, install `onnxruntime-gpu` (replace `onnxruntime`) and set `USE_GPU=true` when running.
+- First run will download models (InsightFace, Whisper, TTS, etc.).
 
 For SadTalker, see `SadTalker/README.md` and `WINDOWS_SETUP.md` for troubleshooting and manual model downloads.
 
@@ -74,6 +90,39 @@ python Text_conversion.py
 # See script for usage details
 ```
 
+### Media Intelligence API
+```bash
+uvicorn app:app --host 0.0.0.0 --port 8000
+# Or: python app.py
+```
+
+**Example curl commands:**
+
+```bash
+# Face analysis (image upload)
+curl -X POST "http://localhost:8000/face/analyze" \
+  -F "file=@Photo1.jpg" \
+  -F "save_to_storage=false"
+
+# Voice analysis (audio/video upload)
+curl -X POST "http://localhost:8000/voice/analyze" \
+  -F "file=@output/Hi.wav" \
+  -F "save_to_storage=false"
+
+# TTS (text to speech)
+curl -X POST "http://localhost:8000/tts" \
+  -F "text=Hello, how are you?" \
+  -F "return_base64=false"
+```
+
+**Request/Response formats:**
+
+| Endpoint | Request | Response |
+|----------|---------|----------|
+| `POST /face/analyze` | `file` (image), optional `user_id`, `media_id`, `save_to_storage` | `{ faces: [{bbox, det_score, embedding, attributes}], face_count, embedding_length }` |
+| `POST /voice/analyze` | `file` (audio/video), optional `user_id`, `media_id`, `save_to_storage` | `{ text, segments, speaker_embedding, speaker_embedding_dim }` |
+| `POST /tts` | `text` (required), optional `speaker_wav` (file), `return_base64` | `{ wav_path }` or `{ audio_base64 }` |
+
 ---
 
 ## 🌐 API Integrations
@@ -90,15 +139,31 @@ python Text_conversion.py
 
 ```
 CM/
+├── app.py               # Media Intelligence API (FastAPI)
+├── pipeline.py          # Media intelligence pipeline orchestrator
+├── config.py            # Config (USE_GPU, etc.)
+├── services/            # Media intelligence services
+│   ├── face_service.py    # InsightFace + DeepFace
+│   ├── asr_service.py     # Whisper ASR
+│   ├── speaker_service.py # Resemblyzer speaker embeddings
+│   └── tts_service.py     # Coqui TTS
+├── utils/
+│   └── media_utils.py     # Audio extraction, load_wav, safe_remove
+├── storage/
+│   └── json_store.py      # JSON persistence (face/speaker/transcript)
+├── data/                  # Persisted embeddings & transcripts (created at runtime)
+├── tests/
+│   └── test_services.py   # Unit tests
 ├── input_media/         # Place input images/videos here
 ├── output/              # All results and generated videos
 ├── SadTalker/           # SadTalker models and scripts
-├── face_pipeline.py     # Face analysis pipeline
+├── face_pipeline.py     # Face analysis pipeline (CLI)
 ├── talking_video_generator.py  # SadTalker + TTS video generator
 ├── heygen_video.py      # HeyGen API video generator
 ├── did_api_test.py      # D-ID API video generator
 ├── personality_predictor.py    # Personality prediction
 ├── Text_conversion.py   # Text/audio/image conversion
+├── requirements_media_intelligence.txt
 ├── requirements_talking_video.txt
 ├── requirements_personality.txt
 ├── WINDOWS_SETUP.md     # Windows troubleshooting
