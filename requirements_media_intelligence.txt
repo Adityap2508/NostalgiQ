@@ -1,0 +1,44 @@
+# Media Intelligence Layer - Python dependencies
+# Install: pip install -r requirements_media_intelligence.txt
+#
+# CPU vs GPU:
+# - Default: CPU. Uses onnxruntime (pulled by insightface) and CPU for PyTorch.
+# - For GPU: pip install onnxruntime-gpu  (replace onnxruntime if needed)
+#   Set USE_GPU=true when running to enable CUDA.
+
+# Core
+numpy>=1.21.0
+opencv-python>=4.6.0
+pillow>=9.0.0
+
+# Face: InsightFace + DeepFace
+insightface>=0.7.0
+onnxruntime>=1.14.0
+# For GPU: pip install onnxruntime-gpu (instead of onnxruntime)
+deepface>=0.0.79
+
+# ASR: OpenAI Whisper
+openai-whisper>=20231117
+# ffmpeg must be installed system-wide: https://ffmpeg.org/download.html
+
+# Speaker embedding
+resemblyzer>=0.1.1.dev0
+
+# Audio utilities
+librosa>=0.9.0
+soundfile>=0.12.0
+
+# TTS (optional but included)
+TTS>=0.22.0
+
+# API
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+python-multipart>=0.0.6
+
+# PyTorch (CPU by default; for GPU use pytorch with CUDA)
+torch>=1.12.0
+torchaudio>=0.12.0
+
+# Testing
+pytest>=7.0.0
